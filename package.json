@@ -1,0 +1,27 @@
+{
+	"name": "svelte-css",
+	"version": "0.1.0",
+	"description": "A Svelte preprocessor making dynamic styles easier to use",
+	"files": [
+		"dist"
+	],
+	"main": "dist/index.js",
+	"module": "dist/index.mjs",
+	"types": "dist/index.d.ts",
+	"scripts": {
+		"build": "tsup src/index.ts --format cjs,esm --dts --minify",
+		"lint": "tsc",
+		"test": "vitest"
+	},
+	"author": "ad-kr",
+	"license": "ISC",
+	"devDependencies": {
+		"svelte": "^4.0.5",
+		"tsup": "^7.2.0",
+		"typescript": "^5.2.2",
+		"vitest": "^0.34.6"
+	},
+	"dependencies": {
+		"outwrap": "^0.1.2"
+	}
+}
