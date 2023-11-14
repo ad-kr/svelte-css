@@ -11,7 +11,7 @@ export function generateInjectedCode(
 
 	code = code.replace(lowercaseTagPattern, (tag) => {
 		if (tag === "<script" || tag === "<style") return tag;
-		return `${tag} data-svelte-css-ids={\`${componentId} \${svelteCssRuntimeId}\`}`;
+		return `${tag} data-sveltesheet-ids={\`${componentId} \${svelteCssRuntimeId}\`}`;
 	});
 
 	code = code.replace(uppercaseTagPattern, (component) => {
@@ -23,8 +23,8 @@ export function generateInjectedCode(
 	// TODO: Remove css-target string
 	code = code.replace(tagWithCssTargetPattern, (tag) => {
 		return tag.replace(
-			"data-svelte-css-ids={`",
-			"data-svelte-css-ids={`${dataSvelteCssIds} "
+			"data-sveltesheet-ids={`",
+			"data-sveltesheet-ids={`${dataSvelteCssIds} "
 		);
 	});
 

@@ -1,4 +1,4 @@
-# svelte-css
+# sveltesheet
 
 A Svelte preprocessor making dynamic styles easier to use.
 
@@ -13,7 +13,7 @@ This preprocessor is still under development and currently doesn't support all c
 ```svelte
 <!-- Flex.svelte -->
 <script>
-    import { css } from "svelte-css";
+    import { css } from "sveltesheet";
     export let direction: "column" | "row" = "row";
 </script>
 
@@ -34,7 +34,7 @@ This preprocessor is still under development and currently doesn't support all c
 ```svelte
 <!-- Box.svelte -->
 <script>
-    import { css } from "svelte-css";
+    import { css } from "sveltesheet";
     export let color = "red";
 </script>
 
@@ -49,12 +49,12 @@ ${css`
 `}
 ```
 
-In order for **svelte-css** to know which html-tag we actually want to target when we write `${Flex}`, we need to add `{ ...cssTarget }` on the target tag inside `Flex.svelte`:
+In order for **sveltesheet** to know which html-tag we actually want to target when we write `${Flex}`, we need to add `{ ...cssTarget }` on the target tag inside `Flex.svelte`:
 
 ```svelte
 <!-- Flex.svelte -->
 <script>
-    import { css, cssTarget } from "svelte-css";
+    import { css, cssTarget } from "sveltesheet";
     export let direction: "column" | "row" = "row";
 </script>
 

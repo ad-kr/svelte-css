@@ -123,12 +123,12 @@ function generateStaticSelectorString(
 	if (selectorPart.type === "combinator") return selectorPart.combinator;
 
 	if (selectorPart.reference.type === "part")
-		return `:global(${selectorPart.reference.part}[data-svelte-css-ids*="${componentId}"])`;
+		return `:global(${selectorPart.reference.part}[data-sveltesheet-ids*="${componentId}"])`;
 
 	const uniqueComponentId =
 		componentInstanceIds.get(selectorPart.reference.component) ?? "";
 
-	return `:global([data-svelte-css-ids*="${uniqueComponentId}"]${selectorPart.reference.additionalSelector}[data-svelte-css-ids*="${componentId}"])`;
+	return `:global([data-sveltesheet-ids*="${uniqueComponentId}"]${selectorPart.reference.additionalSelector}[data-sveltesheet-ids*="${componentId}"])`;
 }
 
 function generateDynamicSelectorString(
@@ -138,10 +138,10 @@ function generateDynamicSelectorString(
 	if (selectorPart.type === "combinator") return selectorPart.combinator;
 
 	if (selectorPart.reference.type === "part")
-		return `${selectorPart.reference.part}[data-svelte-css-ids*="\${svelteCssRuntimeId}"]`;
+		return `${selectorPart.reference.part}[data-sveltesheet-ids*="\${svelteCssRuntimeId}"]`;
 
 	const uniqueComponentId =
 		componentInstanceIds.get(selectorPart.reference.component) ?? "";
 
-	return `[data-svelte-css-ids*="${uniqueComponentId}"]${selectorPart.reference.additionalSelector}[data-svelte-css-ids*="\${svelteCssRuntimeId}"]`;
+	return `[data-sveltesheet-ids*="${uniqueComponentId}"]${selectorPart.reference.additionalSelector}[data-sveltesheet-ids*="\${svelteCssRuntimeId}"]`;
 }

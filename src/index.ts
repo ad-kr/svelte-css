@@ -4,11 +4,11 @@ import { processScript } from "./processors/processScript";
 
 export function cssProcessor(): PreprocessorGroup {
 	return {
-		name: "svelte-css",
+		name: "sveltesheet",
 		markup: processMarkup,
 		script: processScript,
 	};
 }
 
 export function css(_: TemplateStringsArray, ...__: unknown[]) {}
-export const cssTarget = { "data-svelte-css-target": "" } as const;
+export const cssTarget = { "data-sveltesheet-target": "" } as const;
