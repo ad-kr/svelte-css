@@ -4,9 +4,9 @@ A Svelte preprocessor making dynamic styles easier to use.
 
 ### Important!
 
-This preprocessor is still under development and currently doesn't support all css features, like `@media` and such. Use with caution, and report any problems and broken css features.
+This preprocessor is still under development and currently doesn't support all css features, like `@media`. Please report any problems and missing css features.
 
-## Usage
+## Examples
 
 ### Using variables inside css:
 
@@ -49,7 +49,7 @@ ${css`
 `}
 ```
 
-In order for **sveltesheet** to know which html-tag we actually want to target when we write `${Flex}`, we need to add `{ ...cssTarget }` on the target tag inside `Flex.svelte`:
+In order for **sveltesheet** to know which tag we actually want to target when we write `${Flex}`, we need to add `{...cssTarget}` on the target tag inside `Flex.svelte`:
 
 ```svelte
 <!-- Flex.svelte -->
@@ -58,7 +58,7 @@ In order for **sveltesheet** to know which html-tag we actually want to target w
     export let direction: "column" | "row" = "row";
 </script>
 
-<div { ...cssTarget }>
+<div {...cssTarget}>
     <slot />
 </div>
 
@@ -69,6 +69,31 @@ In order for **sveltesheet** to know which html-tag we actually want to target w
     }
 `}
 ```
+
+## How to use
+
+1. Install the package. Run:
+    - `npm install stylesheet`
+2. Inside `svelte.config.js`, add `sveltesheet()` to the list of preprocessors:
+
+```js
+import adapter from "@sveltejs/adapter-auto";
+import { vitePreprocess } from "@sveltejs/kit/vite";
+//Import this:
+import { sveltesheet } from "sveltesheet";
+
+const config = {
+	//Add `sveltesheet()` here:
+	preprocess: [sveltesheet(), vitePreprocess()],
+	kit: {
+		adapter: adapter(),
+	},
+};
+
+export default config;
+```
+
+That's it! **Sveltesheet** should now be ready to use. ✨
 
 ## How does it work?
 
