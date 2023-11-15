@@ -7,7 +7,10 @@ export function generateInjectedCode(
 	const lowercaseTagPattern = /<[a-z][^\/>\s]*(?=\s|>)/g;
 	const uppercaseTagPattern = /<[A-Z][^\/>\s]*(?=\s|>)/g;
 	const tagWithCssTargetPattern =
-		/<[^>]*{\s*\.\.\.[^}]*cssTarget[^}]*}[^>]*>/g; // Matches whole tag that contains '{ ...cssTarget }';
+		/<[a-z][^>]*{\s*\.\.\.[^}]*cssTarget[^}]*}[^>]*>/g; // Matches whole tag that contains '{ ...cssTarget }';
+	const componentWithCssTargetPattern =
+		/<[A-Z][^>]*{\s*\.\.\.[^}]*cssTarget[^}]*}[^>]*>/g; // Matches whole tag that contains '{ ...cssTarget }';
+	const cssTargetPattern = /{\s*\.\.\.[^}]*cssTarget[^}]*}/g;
 
 	code = code.replace(lowercaseTagPattern, (tag) => {
 		if (tag === "<script" || tag === "<style") return tag;
@@ -20,12 +23,23 @@ export function generateInjectedCode(
 		return `${component} dataSvelteCssIds={\`${instanceId} ${componentId} \${svelteCssRuntimeId}\`}`;
 	});
 
-	// TODO: Remove css-target string
+	// TODO: Remove css-target attributes
 	code = code.replace(tagWithCssTargetPattern, (tag) => {
-		return tag.replace(
-			"data-sveltesheet-ids={`",
-			"data-sveltesheet-ids={`${dataSvelteCssIds} "
-		);
+		return tag
+			.replace(
+				"data-sveltesheet-ids={`",
+				"data-sveltesheet-ids={`${dataSvelteCssIds} "
+			)
+			.replace(cssTargetPattern, "");
+	});
+
+	code = code.replace(componentWithCssTargetPattern, (component) => {
+		return component
+			.replace(
+				"dataSvelteCssIds={`",
+				"dataSvelteCssIds={`${dataSvelteCssIds} "
+			)
+			.replace(cssTargetPattern, "");
 	});
 
 	return code;
