@@ -2,10 +2,16 @@ import type { PreprocessorGroup } from "svelte/compiler";
 import { processMarkup } from "./processors/processMarkup";
 import { processScript } from "./processors/processScript";
 
-export function cssProcessor(): PreprocessorGroup {
+export type CssProcessorOtions = {
+	printCode?: boolean;
+};
+
+export function cssProcessor(
+	processorOptions: CssProcessorOtions = { printCode: false }
+): PreprocessorGroup {
 	return {
 		name: "sveltesheet",
-		markup: processMarkup,
+		markup: (opts) => processMarkup(opts, processorOptions),
 		script: processScript,
 	};
 }

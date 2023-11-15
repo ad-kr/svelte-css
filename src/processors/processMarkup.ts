@@ -5,8 +5,13 @@ import { generateStyles } from "../transform";
 import { generateInjectedCode } from "../transform/generateInjectedCode";
 import { getUniqueComponentIds } from "../transform/getComponentInstanceIds";
 import { hash } from "../utils/hash";
+import { ArgumentsType } from "vitest";
+import { CssProcessorOtions } from "..";
 
-export const processMarkup: MarkupPreprocessor = async (opts) => {
+export const processMarkup = async (
+	opts: ArgumentsType<MarkupPreprocessor>[0],
+	processorOptions: CssProcessorOtions
+) => {
 	// TODO: This pattern is very strict with formatting right now, and it still gets parsed if the css block is commented out.
 	const cssBlockPattern = /\{css`([\s\S]*?)`\}/;
 	const matchedString = opts.content.match(cssBlockPattern)?.[0];
@@ -34,6 +39,8 @@ export const processMarkup: MarkupPreprocessor = async (opts) => {
 
 	code += staticStyle;
 	code += dynamicStyle;
+
+	if (processorOptions.printCode) console.log(code);
 
 	return { code };
 };
