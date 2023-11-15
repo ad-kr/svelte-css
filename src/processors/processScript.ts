@@ -1,7 +1,7 @@
 import { Preprocessor } from "svelte/compiler";
 
 export const processScript: Preprocessor = (opts) => {
-	const svelteCssId = 'export let dataSvelteCssIds = "";dataSvelteCssIds;';
+	const svelteCssId = 'export let dataSveltesheetIds = "";dataSveltesheetIds;';
 	const runtimeIdCode =
 		'const svelteCssRuntimeId = "rt" + crypto.randomUUID().replaceAll("-", "");';
         // 'const svelteCssRuntimeId = "rt" + Math.round(Math.random() * 100000000000);';

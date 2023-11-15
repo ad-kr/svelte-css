@@ -20,7 +20,7 @@ export function generateInjectedCode(
 	code = code.replace(uppercaseTagPattern, (component) => {
 		const componentTagName = component.substring(1);
 		const instanceId = componentInstanceIds.get(componentTagName) ?? "";
-		return `${component} dataSvelteCssIds={\`${instanceId} ${componentId} \${svelteCssRuntimeId}\`}`;
+		return `${component} dataSveltesheetIds={\`${instanceId} ${componentId} \${svelteCssRuntimeId}\`}`;
 	});
 
 	// TODO: Remove css-target attributes
@@ -28,7 +28,7 @@ export function generateInjectedCode(
 		return tag
 			.replace(
 				"data-sveltesheet-ids={`",
-				"data-sveltesheet-ids={`${dataSvelteCssIds} "
+				"data-sveltesheet-ids={`${dataSveltesheetIds} "
 			)
 			.replace(cssTargetPattern, "");
 	});
@@ -36,8 +36,8 @@ export function generateInjectedCode(
 	code = code.replace(componentWithCssTargetPattern, (component) => {
 		return component
 			.replace(
-				"dataSvelteCssIds={`",
-				"dataSvelteCssIds={`${dataSvelteCssIds} "
+				"dataSveltesheetIds={`",
+				"dataSveltesheetIds={`${dataSveltesheetIds} "
 			)
 			.replace(cssTargetPattern, "");
 	});

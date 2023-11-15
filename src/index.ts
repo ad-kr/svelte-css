@@ -6,7 +6,7 @@ export type CssProcessorOtions = {
 	printCode?: boolean;
 };
 
-export function cssProcessor(
+export function sveltesheet(
 	processorOptions: CssProcessorOtions = { printCode: false }
 ): PreprocessorGroup {
 	return {
