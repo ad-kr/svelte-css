@@ -9,6 +9,7 @@ test("parse", () => {
         .testing {
             width: 100%;
             color: \${Math.random() > 0.5 ? "red" : "yellow"};
+            grid-template-columns: repeat(\${columns}, 1fr);
         }
         @media screen and (max-width: 1200px) {
             .bar {
@@ -30,6 +31,7 @@ test("parse", () => {
 		"componentId",
 		new Map()
 	);
+
 	console.log(staticStyle);
 	console.log(dynamicStyle);
 });

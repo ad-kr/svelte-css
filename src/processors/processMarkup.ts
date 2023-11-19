@@ -31,11 +31,7 @@ export const processMarkup = async (
 	);
 
 	code = generateInjectedCode(componentId, componentInstanceIds, code);
-	// const { staticStyle, dynamicStyle } = generateStyles(
-	// 	componentId,
-	// 	componentInstanceIds,
-	// 	items
-	// );
+
 	const { staticStyle, dynamicStyle } = transpileItems(
 		items,
 		componentId,
