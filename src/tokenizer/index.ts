@@ -1,4 +1,4 @@
-import { Token } from "./tokens";
+import { Keyword, Token, keywords } from "./tokens";
 import { isChar } from "./utils";
 
 export function tokenize(cssString: string): Token[] {
@@ -83,14 +83,17 @@ export function tokenize(cssString: string): Token[] {
 			chars.shift(); // Consume
 		}
 
-		// TODO: Add this when working on keywords
-		// if (isKeyword(portion)) {
-		// 	tokens.push({ type: "keyword", keyword: portion });
-		// 	continue;
-		// }
+		if (isKeyword(portion)) {
+			tokens.push({ type: "keyword", keyword: portion });
+			continue;
+		}
 
 		tokens.push({ type: "portion", portion });
 	}
 
 	return tokens;
+}
+
+function isKeyword(portion: string): portion is Keyword {
+	return keywords.includes(portion as Keyword);
 }

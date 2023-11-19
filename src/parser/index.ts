@@ -3,7 +3,9 @@ import { AstItem } from "../ast";
 import { Token } from "../tokenizer/tokens";
 import { parseRule } from "./parseRule";
 import { Parser } from "./parser";
+import { parseKeyword } from "./parseKeyword";
 
+/** Parsing of the css is actually quite dumb and simple in svelesheet. We're not actually creating a valid css AST, but rather only generating the parts that we need for further analysis. */
 export function parse(tokens: Token[]): AstItem[] {
 	const items: AstItem[] = [];
 
@@ -20,12 +22,14 @@ export function parse(tokens: Token[]): AstItem[] {
 	return items;
 }
 
-function parseOuterScope(parser: Parser): Result<AstItem, string> {
+export function parseOuterScope(parser: Parser): Result<AstItem, string> {
 	parser.skipWhitespace();
 
 	const peeked = parser.peek();
 
 	if (peeked.isUndefined()) return err("Expected a css rule"); // TODO: Return error from outwrap
+
+	if (peeked.isKeyword()) return parseKeyword(parser);
 
 	return parseRule(parser);
 }

@@ -1,4 +1,10 @@
-export type AstItem = { type: "rule"; selectors: Selector[]; body: RuleBody };
+export type AstItem =
+	| { type: "rule"; selectors: Selector[]; body: RuleBody }
+	| {
+			type: "at-rule";
+			query: { type: "static" | "dynamic"; string: string };
+			items: AstItem[];
+	  };
 
 export type Selector = SelectorPart[];
 

@@ -7,7 +7,9 @@ export async function getUniqueComponentIds(
 ) {
 	const componentInstanceIds = new Map<string, string>();
 
-	const selectorParts = items.flatMap((rule) => rule.selectors.flat());
+	const selectorParts = items.flatMap((rule) =>
+		rule.type === "rule" ? rule.selectors.flat() : []
+	);
 
 	for (const selectorPart of selectorParts) {
 		if (

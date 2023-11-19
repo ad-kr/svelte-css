@@ -1,7 +1,7 @@
 import { MarkupPreprocessor } from "svelte/compiler";
 import { tokenize } from "../tokenizer";
 import { parse } from "../parser";
-import { generateStyles } from "../transform";
+import { generateStyles, transpileItems } from "../transform";
 import { generateInjectedCode } from "../transform/generateInjectedCode";
 import { getUniqueComponentIds } from "../transform/getComponentInstanceIds";
 import { hash } from "../utils/hash";
@@ -31,10 +31,15 @@ export const processMarkup = async (
 	);
 
 	code = generateInjectedCode(componentId, componentInstanceIds, code);
-	const { staticStyle, dynamicStyle } = generateStyles(
+	// const { staticStyle, dynamicStyle } = generateStyles(
+	// 	componentId,
+	// 	componentInstanceIds,
+	// 	items
+	// );
+	const { staticStyle, dynamicStyle } = transpileItems(
+		items,
 		componentId,
-		componentInstanceIds,
-		items
+		componentInstanceIds
 	);
 
 	code += staticStyle;

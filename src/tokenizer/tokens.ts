@@ -34,3 +34,4 @@ export type Token =
 	| { type: "portion"; portion: string }
 	| { type: "code"; code: string }
 	| { type: "string"; string: string }
+	| { type: "keyword"; keyword: Keyword };

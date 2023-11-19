@@ -30,6 +30,8 @@ export class TokenWrapper<T extends Token | undefined = Token | undefined> {
 				return " ";
 			case "string":
 				return `"${this.token.string}"`;
+			case "keyword":
+				return this.token.keyword;
 		}
 	}
 
@@ -90,6 +92,14 @@ export class TokenWrapper<T extends Token | undefined = Token | undefined> {
 	): this is TokenWrapper<{ type: "char"; char: T[number] }> {
 		if (!this.isChar()) return false;
 		return either.includes(this.token.char);
+	}
+
+	public isKeyword(): this is TokenWrapper<{
+		type: "keyword";
+		keyword: Keyword;
+	}> {
+		if (this.token === undefined) return false;
+		return this.token.type === "keyword";
 	}
 
 	/** Tells Typescript that the token is of certain type.
