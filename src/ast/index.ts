@@ -1,11 +1,14 @@
+import { Token } from "../tokenizer/tokens";
+
 export type AstItem =
 	| { type: "rule"; selectors: Selector[]; body: RuleBody }
 	| {
 			type: "at-rule";
-			query: { type: "static" | "dynamic"; string: string };
+			query: { type: "static" | "dynamic"; queryTokens: Token[] };
 			items: AstItem[];
 	  };
 
+//TODO: Replace SelectorPart with tokens, just like queryTokens?
 export type Selector = SelectorPart[];
 
 export type Reference =

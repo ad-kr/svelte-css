@@ -2,6 +2,7 @@ import { Result, err, ok } from "outwrap";
 import { AstItem } from "../ast";
 import { Parser } from "./parser";
 import { parseOuterScope } from ".";
+import { Token } from "../tokenizer/tokens";
 
 export function parseKeyword(
 	p: Parser
@@ -32,7 +33,7 @@ export function parseKeyword(
 function parseKeywordQuery(
 	p: Parser
 ): Result<Extract<AstItem, { type: "at-rule" }>["query"], string> {
-	let query = "";
+	let queryTokens: Token[] = [];
 	let isDynamic = false;
 
 	while (true) {
@@ -43,10 +44,10 @@ function parseKeywordQuery(
 		if (peeked.isCode()) isDynamic = true;
 		p.consume();
 
-		query += peeked.toCssString();
+		queryTokens.push(peeked.get()!);
 	}
 
-	return ok({ string: query, type: isDynamic ? "dynamic" : "static" });
+	return ok({ queryTokens, type: isDynamic ? "dynamic" : "static" });
 }
 
 function parseKeywordRules(p: Parser): Result<AstItem[], string> {

@@ -1,4 +1,5 @@
 import { AstItem, Property, Reference, Selector, SelectorPart } from "../ast";
+import { TokenWrapper } from "../tokenizer/utils";
 
 // TODO: Create separate transpiler class that contains componentID and componentInstanceIds, so that they don't have to be passed as arguments to every function
 export function transpileItems(
@@ -194,7 +195,9 @@ function transpileAtRule(
 	componentId: string,
 	componentInstanceIds: Map<string, string>
 ) {
-	const atRuleQuery = atRule.query.string;
+	const atRuleQuery = atRule.query.queryTokens
+		.map((token) => new TokenWrapper(token).toCssString())
+		.join("");
 	let innerString = "";
 
 	for (const item of atRule.items) {
@@ -207,7 +210,8 @@ function transpileAtRule(
 		innerString += staticString + dynamicString;
 	}
 
-	const atRuleString = innerString.length > 0 ? `${atRuleQuery}{${innerString}}` : "";
+	const atRuleString =
+		innerString.length > 0 ? `${atRuleQuery}{${innerString}}` : "";
 
 	return {
 		staticString: "",

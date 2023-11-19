@@ -1,6 +1,6 @@
 {
 	"name": "sveltesheet",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"description": "A Svelte preprocessor making dynamic styles easier to use",
 	"files": [
 		"dist"
