@@ -75,7 +75,11 @@ export function tokenize(cssString: string): Token[] {
 				break;
 			}
 
-			if (isChar(peekedNextChar) || /\s/.test(peekedNextChar) || peekedNextChar === "$") {
+			if (
+				isChar(peekedNextChar) ||
+				/\s/.test(peekedNextChar) ||
+				(peekedNextChar === "$" && chars[1] === "{")
+			) {
 				break;
 			}
 
