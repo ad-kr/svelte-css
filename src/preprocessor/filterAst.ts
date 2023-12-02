@@ -10,6 +10,8 @@ export function filterStaticAst(ast: CssNode) {
 	clearAllEmptyBlocks(ast);
 }
 
+const codePattern = /\${(.*)}/g;
+
 export function filterDynamicAst(ast: CssNode) {
 	walk(ast, function (_, item, list) {
 		if (!item) return;
@@ -51,7 +53,6 @@ function isItemStatic(item: ListItem<CssNode>) {
 	}
 }
 
-const codePattern = /:code\((.*)\)/g;
 
 function clearAllEmptyBlocks(ast: CssNode) {
 	if (!hasEmptyBlocks(ast)) return;
