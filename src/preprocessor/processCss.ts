@@ -30,8 +30,12 @@ export async function processCss(css: string, filename: string) {
 
 	dynamicCss = convertCodeToLiteralExpression(dynamicCss);
 
-	const staticStyleTag = `<style>${staticCss}</style>`;
-	const dynamicStyleTag = `<svelte:element this="style">{\`${dynamicCss}\`}</svelte:element>`;
+	const staticStyleTag =
+		staticCss.length > 0 ? `<style>${staticCss}</style>` : "";
+	const dynamicStyleTag =
+		dynamicCss.length > 0
+			? `<svelte:element this="style">{\`${dynamicCss}\`}</svelte:element>`
+			: "";
 
 	return { staticStyleTag, dynamicStyleTag, uniqueComponentIds };
 }
