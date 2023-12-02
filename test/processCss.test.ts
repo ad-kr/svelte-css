@@ -1,8 +1,9 @@
 import { test } from "vitest";
 import { processCss } from "../src/preprocessor/processCss";
+import { parse } from "css-tree";
 
 test("processCss", async () => {
-	const css = `
+	const cssOld = `
         @media screen and (min-width: 400px) {
             body {
                 color: blue;
@@ -33,6 +34,19 @@ test("processCss", async () => {
                     color: :code(dynamicColor);
                     background: red;
                 }
+            }
+        }
+    `;
+
+	const css = `
+        a > \${Component}{
+            color: \${colors[color]};
+            /* border: \${getTextStyle(size, weight)}; */
+            border: \${none()};
+        }
+        @media screen and (max-width: \${480}px) {
+            div {
+                width: \${200}px;
             }
         }
     `;

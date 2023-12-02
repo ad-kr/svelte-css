@@ -5,13 +5,12 @@ import {
 	insertDynamicAttributes,
 	insertStaticAttributes,
 } from "./insertAttributes";
-import { convertCodeToLiteralExpression } from "./convertCodeToLiteralExpression";
 import { replaceCodeParts } from "./replaceCodeParts";
 
 export async function processCss(css: string, filename: string) {
-	const processedCss = replaceCodeParts(css);
+	css = replaceCodeParts(css);
 
-	const staticAst = parse(processedCss);
+	const staticAst = parse(css);
 	const dynamicAst = clone(staticAst);
 
 	const uniqueComponentIds = await collectUniqueComponentIds(
@@ -27,8 +26,6 @@ export async function processCss(css: string, filename: string) {
 
 	const staticCss = generate(staticAst);
 	let dynamicCss = generate(dynamicAst);
-
-	dynamicCss = convertCodeToLiteralExpression(dynamicCss);
 
 	const staticStyleTag =
 		staticCss.length > 0 ? `<style>${staticCss}</style>` : "";
