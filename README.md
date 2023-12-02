@@ -114,21 +114,21 @@ This...
 `}
 ```
 
-gets transformed into this:
+gets transformed into something similar to this:
 
 ```svelte
 <style>
-    /* Component identifiers */ > /* div identifiers */ {
+    [data-sveltesheet-ids="componentid"] > div {
         height: 200px;
     }
-    /* div identifiers */ {
+    div {
         background-color: red;
     }
 </style>
 
 <svelte:element this="style">
 {`
-    ${/* Component identifiers */} > ${/* div identifiers */} {
+    [data-sveltesheet-ids="componentid"][data-sveltesheet-ids="runtimeId"] > div[data-sveltesheet-ids="runtimeId"] {
         width: ${200 + 300}px;
     }
 `}

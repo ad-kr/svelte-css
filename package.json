@@ -1,6 +1,6 @@
 {
 	"name": "sveltesheet",
-	"version": "0.3.3",
+	"version": "0.4.0",
 	"description": "A Svelte preprocessor making dynamic styles easier to use",
 	"files": [
 		"dist"
@@ -22,6 +22,7 @@
 		"vitest": "^0.34.6"
 	},
 	"dependencies": {
-		"outwrap": "^0.1.2"
+		"@types/css-tree": "^2.3.4",
+		"css-tree": "^2.3.1"
 	}
 }
