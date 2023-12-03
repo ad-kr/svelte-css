@@ -43,12 +43,14 @@ test("processCss", async () => {
             color: \${colors[color]};
             /* border: \${getTextStyle(size, weight)}; */
             border: \${none()};
+            css: \${s};
         }
         @media screen and (max-width: \${480}px) {
             div {
-                width: \${200}px;
+                width: 20px;
             }
         }
+        @css \${customCss};
     `;
 
 	const processed = await processCss(css, "filename");

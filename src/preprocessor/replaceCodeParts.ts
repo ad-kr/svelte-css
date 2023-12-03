@@ -4,7 +4,7 @@ export function replaceCodeParts(css: string) {
 	const ast = parse(css);
 
 	let prevNode: CssNode;
-	walk(ast, function (node, item, list) {
+	walk(ast, function (node) {
 		if (node.type === "Block" && node.children.first?.type === "Raw") {
 			if (prevNode.type === "Raw") {
 				prevNode.value = prevNode.value.slice(0, -1);

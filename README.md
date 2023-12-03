@@ -70,6 +70,65 @@ In order for **sveltesheet** to know which tag we actually want to target when w
 `}
 ```
 
+### Using bigger css parts
+
+Sometimes it's useful to reuse a part of css. With sveltesheet, you can use the `@css` at-rule or `css` property to achieve this.
+
+#### `css` property
+
+```svelte
+<script>
+    import { css } from "sveltesheet";
+
+    function getTextStyle(size: "big" | "small") {
+        // Note that you can use the `css` function for convenient syntax highlighting with a variety of IDE-plugins
+        return css`
+            font-size: ${size === "big" ? 2 : 1}rem;
+            font-weight: ${size === "big" ? 700 : 400};
+        `;
+    }
+
+</script>
+
+<h1>Big heading!</h1>
+<h2>Small heading.</h2>
+
+{css`
+    h1 {
+        css: ${getTextStyle("big")};
+    }
+    h2 {
+        css: ${getTextStyle("small")};
+    }
+`}
+```
+
+#### `@css` at-rule
+
+With the `@css` at rule, you can create whole rules, including the selectors.
+
+**💥 Important! The resulting css will always have a global scope, as it is not processed at runtime.**
+
+```svelte
+<script>
+    import { css } from "sveltesheet";
+
+    // Note that you can use the `css` function for convenient syntax highlighting with a variety of IDE-plugins
+    const redTextCss = css`
+        p {
+            color: red;
+        }
+    `;
+</script>
+
+<h1>Title!</h1>
+<p>Some text</p>
+
+{css`
+    @css ${redTextCss};
+`}
+```
+
 ## How to use
 
 1. Install the package. Run:

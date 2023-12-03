@@ -9,5 +9,7 @@ export function sveltesheet(): PreprocessorGroup {
 	};
 }
 
-export function css(_: TemplateStringsArray, ...__: unknown[]) {}
+export function css(strings: TemplateStringsArray, ...values: unknown[]) {
+	return strings.reduce((acc, curr, i) => acc + curr + (values[i] ?? ""), "");
+}
 export const cssTarget = {} as const;

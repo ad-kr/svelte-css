@@ -35,6 +35,7 @@ export function filterDynamicAst(ast: CssNode) {
 }
 
 function isItemDynamic(item: ListItem<CssNode>) {
+	if (item.data.type === "Atrule" && item.data.name === "css") return true;
 	if (item.data.type === "Atrule" && item.data.prelude?.type === "Raw") {
 		return !!item.data.prelude.value.match(codePattern);
 	}
@@ -44,6 +45,7 @@ function isItemDynamic(item: ListItem<CssNode>) {
 }
 
 function isItemStatic(item: ListItem<CssNode>) {
+	if (item.data.type === "Atrule" && item.data.name === "css") return false;
 	if (item.data.type === "Atrule" && item.data.prelude?.type === "Raw") {
 		return !item.data.prelude.value.match(codePattern);
 	}
@@ -52,7 +54,6 @@ function isItemStatic(item: ListItem<CssNode>) {
 		return !item.data.value.value.match(codePattern);
 	}
 }
-
 
 function clearAllEmptyBlocks(ast: CssNode) {
 	if (!hasEmptyBlocks(ast)) return;

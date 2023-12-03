@@ -6,6 +6,7 @@ import {
 	insertStaticAttributes,
 } from "./insertAttributes";
 import { replaceCodeParts } from "./replaceCodeParts";
+import { unwrapDynamicCssValues } from "./unwrapDynamicCssValues";
 
 export async function processCss(css: string, filename: string) {
 	css = replaceCodeParts(css);
@@ -23,8 +24,10 @@ export async function processCss(css: string, filename: string) {
 
 	insertStaticAttributes(staticAst, uniqueComponentIds);
 	insertDynamicAttributes(dynamicAst, uniqueComponentIds);
-
-	const staticCss = generate(staticAst);
+    
+	unwrapDynamicCssValues(dynamicAst);
+	
+    const staticCss = generate(staticAst);
 	let dynamicCss = generate(dynamicAst);
 
 	const staticStyleTag =
