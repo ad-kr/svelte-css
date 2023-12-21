@@ -9,12 +9,24 @@ export function addAttributesToTags(
 	return code;
 }
 
-function injectTagAttributes(code: string) {
+const scriptPattern = /<script(?:[\s\S])*?<\/script>/g;
+
+export function injectTagAttributes(code: string) {
 	const lowercaseTagPattern = /<[a-z][^\/>\s]*(?=\s|>)/g;
-	return code.replace(lowercaseTagPattern, (tag) => {
-		if (tag === "<script" || tag === "<style") return tag;
-		return `${tag} data-sveltesheet-ids={\`\${svelteCssRuntimeId}\`}`;
-	});
+
+	const scriptTags = code.matchAll(scriptPattern);
+	const codeWithoutScriptTags = code.replaceAll(scriptPattern, "");
+
+	const injectedCode = codeWithoutScriptTags.replace(
+		lowercaseTagPattern,
+		(tag) => {
+			if (tag === "<style") return tag;
+			return `${tag} data-sveltesheet-ids={\`\${svelteCssRuntimeId}\`}`;
+		}
+	);
+
+	const scriptTagsString = Array.from(scriptTags).join("");
+	return scriptTagsString + injectedCode;
 }
 
 function injectComponentAttributes(
@@ -22,12 +34,22 @@ function injectComponentAttributes(
 	componentInstanceIds: Map<string, string>
 ) {
 	const uppercaseTagPattern = /<[A-Z][^\/>\s]*(?=\s|>)/g;
-	return code.replace(uppercaseTagPattern, (component) => {
-		const componentName = component.substring(1);
-		const componentInstanceId =
-			componentInstanceIds.get(componentName) ?? "";
-		return `${component} dataSveltesheetIds={\`${componentInstanceId} \${svelteCssRuntimeId}\`}`;
-	});
+
+	const scriptTags = code.matchAll(scriptPattern);
+	const codeWithoutScriptTags = code.replaceAll(scriptPattern, "");
+
+	const injectedCode = codeWithoutScriptTags.replace(
+		uppercaseTagPattern,
+		(component) => {
+			const componentName = component.substring(1);
+			const componentInstanceId =
+				componentInstanceIds.get(componentName) ?? "";
+			return `${component} dataSveltesheetIds={\`${componentInstanceId} \${svelteCssRuntimeId}\`}`;
+		}
+	);
+
+	const scriptTagsString = Array.from(scriptTags).join("");
+	return scriptTagsString + injectedCode;
 }
 
 const cssTargetPattern = /{\s*\.\.\.[^}]*cssTarget[^}]*}/g;
